@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.4/b-flash-1.6.4/datatables.min.css"/>
+    <link rel="stylesheet" href="estilos/style.css">
+    <title>COVID Por Partido</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">COVID Por Partido</div>
+        <a href="#" class="toggle-button">
+            <span class="barra"></span>
+            <span class="barra2"></span>
+            <span class="barra"></span>
+        </a>
+        <div class="navbar-links">
+            <ul>
+                <li><a href="#datos">Datos</a></li>
+                <li><a href="#tabla">Tabla general</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="datosGenerales" id="datosGenerales">
+        <div class="contenedor">
+            <h1>Datos actualizados al día <span id="fecha"></span></h1>
+            <div class="cards">
+                <div class="card card-confirmados">
+                    <h3><span id="numeroConfirmados"></span> casos confirmados</h3>
+                </div>
+                <div class="card card-defunciones">
+                    <h3><span id="numeroDefunciones"></span> defunciones</h3>
+                </div>
+                <div class="card card-letalidad">
+                    <h3><span id="porcentajeLetalidad"></span>% de letalidad</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="datos-partidos">
+        <div class="contenedor">
+            <h2>Resumen por partido</h2>
+            <div class="partidos">
+                
+            </div>
+        </div>
+    </section>
+    <section class="tabla-general">
+        <table id="tablaGeneral">
+            <thead>
+                <tr>
+                    <th>Partido</th>
+                    <th>Población</th>
+                    <th>Casos confirmados</th>
+                    <th>Casos activos</th>
+                    <th>Defunciones</th>
+                    <th>% de letalidad</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+    <section class="faq" id="faq"></section>
+    <footer>
+        <!--<p>Compartenos en tus redes sociales</p>
+        <ul>
+            <li><a href="https://www.facebook.com/sharer"><i class="facebook"></i></a></li>
+            <li><a href="#">Twitter</a></li>
+        </ul>-->
+        <h3>Compartir en redes sociales</h3>
+        <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fab fa-twitter-square fa-2x"></i></a>
+        
+        <p>Pagina creada y actualizada por <a class="mi-perfil" href="https://github.com/EduardoConX">Eduardo Pacheco</a></p>
+        <br>
+        <p><a class="repositorio" href="https://github.com/EduardoConX/COVIDPorPartido">Proyecto en Github</a></p>
+    </footer>
+    <!--Scripts-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.4/b-flash-1.6.4/datatables.min.js"></script>
+    <script src="https://kit.fontawesome.com/a0519bdd56.js" crossorigin="anonymous"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

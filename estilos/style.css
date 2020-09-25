@@ -12,6 +12,7 @@ body, html{
 
 body{
     font-family: 'Nunito', sans-serif;
+    background-color: #ecf0f5;
 }
 
 /*Navbar*/
@@ -119,6 +120,7 @@ p{
 .card{
     width: 30%;
     padding: .5em;
+    margin: 1em;
     color: white;
 }
 
@@ -147,9 +149,34 @@ p{
 .partido{
     width: 45%;
     padding: .5em;
+    margin: 1em;
+    background-color: white;
+    border-radius: 10px;
 }
 
-@media (max-width: 480px){
+.mini-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.mini-card-poblacion{
+    border-top: 3px solid #02a247;
+    border-left: 3px solid #02a247;
+}
+
+.mini-card-confirmados{
+    border-top: 3px solid #e74a3b;
+    border-left: 3px solid #e74a3b;
+}
+
+.mini-card-defunciones{
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+}
+
+@media (max-width: 620px){
     .logo{
         font-size: 1rem;/*100%*/
         margin: 1em;

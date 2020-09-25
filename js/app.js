@@ -74,18 +74,30 @@ $(document).ready(()=>{
         letalidad = defunciones * 100 / confirmados
 
         //Escritura en el DOM
+        //Datos generales
         nombrePartido = $("<h3></h3>").text(partido["nombre"])
         poblacionTexto = $("<p></p>").text(poblacion + " habitantes")
         porcentajePoblacionTexto = $("<p></p>").text(porcentajePoblacion.toFixed(1) + "% de la población nacional")
+        poblacionDiv = $("<div></div>").append(poblacionTexto, porcentajePoblacionTexto)
+        poblacionDiv.addClass("mini-card mini-card-poblacion")
+
+        //Confirmados
         confirmadosTexto = $("<p></p>").text(confirmados + " casos confirmados")
         ppcTexto = $("<p></p>").text(porcentajePoblacionConfirmados.toFixed(3) + "% de su población")
-        pctTexto = $("<p></p>").text(porcentajeConfirmadosTotales.toFixed(3) + "% de confirmados totales")
+        pctTexto = $("<p></p>").text(porcentajeConfirmadosTotales.toFixed(3) + "% de los confirmados totales")
+        confirmadosDiv = $("<div></div>").append(confirmadosTexto, ppcTexto, pctTexto)
+        confirmadosDiv.addClass("mini-card mini-card-confirmados")
+
+        //Defunciones
         defuncionesTexto = $("<p></p>").text(defunciones + " defunciones")
         pdtTexto = $("<p></p>").text(porcentajePoblacionDefunciones.toFixed(3) + "% de su población")
-        ppdTexto = $("<p></p>").text(porcentajeDefuncionesTotales.toFixed(3) + "% de defunciones totales")
+        ppdTexto = $("<p></p>").text(porcentajeDefuncionesTotales.toFixed(3) + "% de las defunciones totales")
         letalidadTexto = $("<p></p>").text(letalidad.toFixed(1) + "% de letalidad");
-        div = $("<div></div>").append(nombrePartido, poblacionTexto, porcentajePoblacionTexto, "<br>", confirmadosTexto, ppcTexto, pctTexto, "<br>", defuncionesTexto, ppdTexto, pdtTexto, letalidadTexto);
-        div.addClass("partido")
-        $(".partidos").append(div)
+        defuncionesDiv = $("<div></div>").append(defuncionesTexto, pdtTexto, ppdTexto, letalidadTexto)
+        defuncionesDiv.addClass("mini-card mini-card-defunciones")
+
+        divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv);
+        divPartido.addClass("partido")
+        $(".partidos").append(divPartido)
     };
 })

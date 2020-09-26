@@ -4,6 +4,10 @@ $(document).ready(()=>{
         $(".navbar-links").toggleClass("activo")
     })
 
+    $(".navbar-links").click(() => {
+        $(".navbar-links").toggleClass("activo")
+    })
+
     //Funcion para crear partidos
     function Partido(nombrePartido, nombreBD, poblacion, color){
         this.nombre = nombrePartido;
@@ -24,6 +28,18 @@ $(document).ready(()=>{
     //partidos = [encuentroSocial, independiente, movimientoCiudadano, morena, pan, prd, pri, nacional]
     partidos = [encuentroSocial, independiente, movimientoCiudadano, morena, pan, prd, pri]
 
+    //Arreglo para los datos de la tabla
+    datosTabla = []
+
+    //Tabla
+    var tabla = $("#tablaResumen").DataTable(
+        {
+            data: datosTabla,
+            paging: false,
+            searching: false,
+            info: false,
+        })
+
     //Lectura de la api
     fetch("https://covidporpartido.firebaseio.com/.json")
     .then(response => response.json())
@@ -43,11 +59,10 @@ $(document).ready(()=>{
             const defuncionesPartido = json[partido["nombreBD"]].defunciones[fecha].acumuladas
 
             generarResumenPartido(partido, confirmadosPartido, defuncionesPartido, confirmados, defunciones)
+            graficarCurva(json[partido["nombreBD"]].confirmados, partido["nombreBD"])
         })
+        
     })
-
-    //Funcion para separar a un numero cada 3 digitos
-    numeroComas = numero => numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
     //Funcion para generar los resumenes por partido
     generarResumenPartido = (partido, confirmados, defunciones, confirmadosNacionales, defuncionesNacionales) => {
@@ -76,28 +91,84 @@ $(document).ready(()=>{
         //Escritura en el DOM
         //Datos generales
         nombrePartido = $("<h3></h3>").text(partido["nombre"])
-        poblacionTexto = $("<p></p>").text(poblacion + " habitantes")
+        poblacionTexto = $("<p></p>").text(numeroComas(poblacion) + " habitantes")
         porcentajePoblacionTexto = $("<p></p>").text(porcentajePoblacion.toFixed(1) + "% de la población nacional")
         poblacionDiv = $("<div></div>").append(poblacionTexto, porcentajePoblacionTexto)
         poblacionDiv.addClass("mini-card mini-card-poblacion")
 
         //Confirmados
-        confirmadosTexto = $("<p></p>").text(confirmados + " casos confirmados")
+        confirmadosTexto = $("<p></p>").text(numeroComas(confirmados) + " casos confirmados")
         ppcTexto = $("<p></p>").text(porcentajePoblacionConfirmados.toFixed(3) + "% de su población")
         pctTexto = $("<p></p>").text(porcentajeConfirmadosTotales.toFixed(3) + "% de los confirmados totales")
         confirmadosDiv = $("<div></div>").append(confirmadosTexto, ppcTexto, pctTexto)
         confirmadosDiv.addClass("mini-card mini-card-confirmados")
 
         //Defunciones
-        defuncionesTexto = $("<p></p>").text(defunciones + " defunciones")
+        defuncionesTexto = $("<p></p>").text(numeroComas(defunciones) + " defunciones")
         pdtTexto = $("<p></p>").text(porcentajePoblacionDefunciones.toFixed(3) + "% de su población")
         ppdTexto = $("<p></p>").text(porcentajeDefuncionesTotales.toFixed(3) + "% de las defunciones totales")
         letalidadTexto = $("<p></p>").text(letalidad.toFixed(1) + "% de letalidad");
         defuncionesDiv = $("<div></div>").append(defuncionesTexto, pdtTexto, ppdTexto, letalidadTexto)
         defuncionesDiv.addClass("mini-card mini-card-defunciones")
 
-        divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv);
+        //Graficas
+        canvasCurva = $("<canvas></canvas>").attr("id", "curva" + partido["nombreBD"])
+        canvasSemaforo = $("<canvas></canvas>").attr("id", "semaforo" + partido["nombreBD"])
+
+        //divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv, canvasCurva, canvasSemaforo);
+        divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv, canvasCurva);
         divPartido.addClass("partido")
         $(".partidos").append(divPartido)
+
+        datosTabla = [partido["nombre"], numeroComas(confirmados), numeroComas(defunciones), letalidad.toFixed(3)]
+        tabla.row.add(datosTabla).draw();
     };
+
+    graficarCurva = (confirmados, partido) =>{
+        datosCurva = []
+        fechasCurva = []
+        confirmadosOrdenados = ordenarArray(confirmados)
+        var ctx = $("#curva" + partido)
+        
+        var dias = confirmadosOrdenados.map(function(e){
+            return e.dia;
+        });
+        
+        var datos = confirmadosOrdenados.map(function(e){
+            return e.acumulados;
+        });
+
+        var miCurva = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dias,
+                datasets: [{
+                    label: "Casos confirmados",
+                    data: datos,
+                    backgroundColor: 'rgba(231, 74, 39, 0.3)'
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Dias transcurridos"
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    //Funcion para separar a un numero cada 3 digitos
+    numeroComas = numero => numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+    //Ordenar arreglo por fechas
+    ordenarArray = objetoDias =>{
+        arregloDias = Object.values(objetoDias);
+        arregloDias.sort((a,b) => a.dia - b.dia);
+        return arregloDias
+    }
 })

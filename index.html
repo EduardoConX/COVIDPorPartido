@@ -18,8 +18,9 @@
         </a>
         <div class="navbar-links">
             <ul>
-                <li><a href="#datos">Datos</a></li>
-                <li><a href="#tabla">Tabla general</a></li>
+                <li><a href="#datosGenerales">Datos generales</a></li>
+                <li><a href="#datosPartidos">Datos por partido</a></li>
+                <li><a href="#tablaGeneral">Tabla general</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
         </div>
@@ -40,7 +41,7 @@
             </div>
         </div>
     </section>
-    <section class="datos-partidos">
+    <section class="datos-partidos" id="datosPartidos">
         <div class="contenedor">
             <h2>Resumen por partido</h2>
             <div class="partidos">
@@ -48,19 +49,20 @@
             </div>
         </div>
     </section>
-    <section class="tabla-general">
-        <table id="tablaGeneral">
-            <thead>
-                <tr>
-                    <th>Partido</th>
-                    <th>Población</th>
-                    <th>Casos confirmados</th>
-                    <th>Casos activos</th>
-                    <th>Defunciones</th>
-                    <th>% de letalidad</th>
-                </tr>
-            </thead>
-        </table>
+    <section class="tabla-general" id="tablaGeneral">
+        <div class="contenedor">
+            <h2>Resumen general</h2>
+            <table id="tablaResumen">
+                <thead>
+                    <tr>
+                        <th>Partido</th>
+                        <th>Casos confirmados</th>
+                        <th>Defunciones</th>
+                        <th>% de letalidad</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </section>
     <section class="faq" id="faq"></section>
     <footer>
@@ -81,6 +83,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.4/b-flash-1.6.4/datatables.min.js"></script>
     <script src="https://kit.fontawesome.com/a0519bdd56.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -86,7 +86,8 @@ h1{
 
 h2{
     font-size: 2rem;
-    margin: 2em 0;
+    margin-top: 2em;
+    margin-bottom: 1em;
 }
 
 h3{
@@ -120,7 +121,7 @@ p{
 .card{
     width: 30%;
     padding: .5em;
-    margin: 1em;
+    margin-bottom: 1em;
     color: white;
 }
 
@@ -149,7 +150,7 @@ p{
 .partido{
     width: 45%;
     padding: .5em;
-    margin: 1em;
+    margin-bottom: 1em;
     background-color: white;
     border-radius: 10px;
 }
@@ -176,7 +177,64 @@ p{
     border-left: 3px solid black;
 }
 
-@media (max-width: 620px){
+/*Tablas*/
+.dataTables_wrapper{
+    overflow-x: auto;
+}
+
+table{
+    width: 100%;
+    font-size: 20px;
+}
+
+th, td{
+    padding: 5px;
+    text-align: right;
+}
+
+table th{
+    background-color: black;
+    font-weight: bold;
+    color: white;
+}
+
+tr td:first-child{
+    text-align: left;   
+}
+
+/*Footer*/
+footer{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+}
+
+footer h3{
+    text-align: center;
+}
+
+footer a{
+    text-decoration: none;/*Quita el subrayado de los links*/
+    color: white;
+}
+
+footer i{
+    margin: .5em;
+}
+
+.mi-perfil{
+    text-decoration: underline;
+}
+
+.repositorio{
+    padding: .5em;
+    margin: 1em;
+    border: 1px white solid;
+}
+
+@media (max-width: 780px){
     .logo{
         font-size: 1rem;/*100%*/
         margin: 1em;
@@ -214,7 +272,9 @@ p{
     }
 
     .cards, .partidos{
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
     
     .card, .partido{

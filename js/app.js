@@ -60,6 +60,7 @@ $(document).ready(()=>{
 
             generarResumenPartido(partido, confirmadosPartido, defuncionesPartido, confirmados, defunciones)
             graficarCurva(json[partido["nombreBD"]].confirmados, partido["nombreBD"])
+            graficarPie(json[partido["nombreBD"]].semaforo, partido["nombreBD"])
         })
         
     })
@@ -115,8 +116,7 @@ $(document).ready(()=>{
         canvasCurva = $("<canvas></canvas>").attr("id", "curva" + partido["nombreBD"])
         canvasSemaforo = $("<canvas></canvas>").attr("id", "semaforo" + partido["nombreBD"])
 
-        //divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv, canvasCurva, canvasSemaforo);
-        divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv, canvasCurva);
+        divPartido = $("<div></div>").append(nombrePartido, poblacionDiv, confirmadosDiv, defuncionesDiv, canvasCurva, canvasSemaforo);
         divPartido.addClass("partido")
         $(".partidos").append(divPartido)
 
@@ -125,18 +125,12 @@ $(document).ready(()=>{
     };
 
     graficarCurva = (confirmados, partido) =>{
-        datosCurva = []
-        fechasCurva = []
         confirmadosOrdenados = ordenarArray(confirmados)
         var ctx = $("#curva" + partido)
         
-        var dias = confirmadosOrdenados.map(function(e){
-            return e.dia;
-        });
+        var dias = confirmadosOrdenados.map(e => e.dia);
         
-        var datos = confirmadosOrdenados.map(function(e){
-            return e.acumulados;
-        });
+        var datos = confirmadosOrdenados.map(e => e.acumulados);
 
         var miCurva = new Chart(ctx, {
             type: 'line',
@@ -145,10 +139,11 @@ $(document).ready(()=>{
                 datasets: [{
                     label: "Casos confirmados",
                     data: datos,
-                    backgroundColor: 'rgba(231, 74, 39, 0.3)'
+                    backgroundColor: 'rgba(231, 74, 59, 0.3)'
                 }]
             },
             options: {
+                responsive: true,
                 scales: {
                     xAxes: [{
                         display: true,
@@ -157,6 +152,45 @@ $(document).ready(()=>{
                             labelString: "Dias transcurridos"
                         }
                     }]
+                }
+            }
+        });
+    }
+
+    graficarPie = (semaforo, partido) => {
+        var colores = []
+        var coloresFondo = []
+        var cantidades = []
+        for(var k in semaforo){
+            colores.push(k)
+            if(k=="Verde"){
+                coloresFondo.push("#02A247")
+            }else if(k=="Amarillo"){
+                coloresFondo.push("#FFC60F")
+            }else if(k=="Naranja"){
+                coloresFondo.push("#FF7000")
+            }
+        }
+        //No se rian, no se me ocurria otra forma de asignar los colores
+
+        cantidades = Object.values(semaforo)
+
+        var ctx = $("#semaforo" + partido)
+
+        var miPie = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: colores,
+                datasets: [{
+                    data: cantidades,
+                    backgroundColor: coloresFondo
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: "Semaforos estatales",
                 }
             }
         });

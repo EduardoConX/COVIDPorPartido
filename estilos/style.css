@@ -202,6 +202,13 @@ tr td:first-child{
     text-align: left;   
 }
 
+/*Imagenes*/
+img{
+    display: block;/*Para que ya no sea un elemento inline y se pueda centrar*/
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 /*Footer*/
 footer{
     background-color: black;

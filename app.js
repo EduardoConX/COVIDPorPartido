@@ -1,128 +1,104 @@
-//ELementos de la interfaz
-$("#toggle-button" ).click(function() {
-    $( "#menu" ).toggleClass("hidden");
-});
 
-$("#lista-partidos" ).hover(function() {
-    $( "#partidos" ).toggleClass("hidden");
-});
 
-$("#partidos" ).hover(function() {
-    $( "#partidos" ).toggleClass("hidden");
-});
+//Lista de partidos con su nombre completo y el que tienen en la base de datos
+encuentroSocial = ["Encuentro Social", "PES"];
+independiente = ["Independiente", "Independiente"];
+movimientoCiudadano = ["Movimiento Ciudadano", "MC"];
+morena = ["Morena", "Morena"];
+pan = ["PAN", "PAN"];
+prd = ["PRD", "PRD"];
+pri = ["PRI", "PRI"];
+partidos = [encuentroSocial, independiente, movimientoCiudadano, morena, pan, prd, pri]
 
-//Funcionan para gerenar los datos de la pagina principal
-const generarHomePage = () =>{
-    //Lista de partidos con su nombre completo y el que tienen en la base de datos
-    encuentroSocial = ["Encuentro Social", "PES"];
-    independiente = ["Independiente", "Independiente"];
-    movimientoCiudadano = ["Movimiento Ciudadano", "MC"];
-    morena = ["Morena", "Morena"];
-    pan = ["PAN", "PAN"];
-    prd = ["PRD", "PRD"];
-    pri = ["PRI", "PRI"];
-    partidos = [encuentroSocial, independiente, movimientoCiudadano, morena, pan, prd, pri]
+//Arreglo para los datos de la tabla
+datosTabla = []
 
-    //Arreglo para los datos de la tabla
-    datosTabla = []
+//Tabla
+var tabla = $("#tabla").DataTable(
+    {
+        data: datosTabla,
+        paging: false,
+        searching: false,
+        info: false,
+        columnDefs: [
+            { className: "border-t border-black", targets: "_all" },
+        ],
+    });
 
-    //Tabla
-    var tabla = $("#tabla").DataTable(
-        {
-            data: datosTabla,
-            paging: false,
-            searching: false,
-            info: false,
-            columnDefs: [
-                { className: "border-t border-black", targets: "_all" },
-            ],
-        });
+//Lectura de la api
+fetch("https://covidporpartido.firebaseio.com/.json")
+.then(response => response.json())
+.then(json => {
+    const fecha = json.ultimaAct;
+    var fechaDefunciones = fecha;
+    $("#ultimaAct").text(fecha);
+    const confirmados = json.Nacional.confirmados[fecha].acumulados;
+    var defunciones;
+    try{
+        /*Intenta obtener las defunciones actualizadas al ultimo dia,
+        pero normalmente en fin de semana no las actualizan*/
+        defunciones = json.Nacional.defunciones[fecha].acumuladas;
+    }catch(error){
+        /*En caso de que no esten actualizadas al ultimo dia, obtiene 
+        las defunciones actualizadas al dia anterior*/
 
-    //Lectura de la api
-    fetch("https://covidporpartido.firebaseio.com/.json")
-    .then(response => response.json())
-    .then(json => {
-        const fecha = json.ultimaAct;
-        var fechaDefunciones = fecha;
-        $("#ultimaAct").text(fecha);
-        const confirmados = json.Nacional.confirmados[fecha].acumulados;
-        var defunciones;
-        try{
-            /*Intenta obtener las defunciones actualizadas al ultimo dia,
-            pero normalmente en fin de semana no las actualizan*/
-            defunciones = json.Nacional.defunciones[fecha].acumuladas;
-        }catch(error){
-            /*En caso de que no esten actualizadas al ultimo dia, obtiene 
-            las defunciones actualizadas al dia anterior*/
+        /*Convierte la ultima fecha de string a date, para poder restarle un dia,
+        despues la regresa a string para poder ser usada en el JSON*/
+        mes = fecha.slice(3,5)
+        dia = fecha.slice(0,2)
+        fechaDefunciones = new Date(fecha.slice(6,10), (mes-1) , dia)
+        fechaDefunciones.setDate(fechaDefunciones.getDate() - 1);
+        fechaDefunciones = fechaDefunciones.toLocaleString();
+        fechaDefunciones = fechaDefunciones.slice(0,2) + "-" + fechaDefunciones.slice(3,5) + "-" + fecha.slice(6,10);
+        defunciones = json.Nacional.defunciones[fechaDefunciones].acumuladas;
+    }
+    
+    const letalidad = defunciones * 100 / confirmados
+    $("#casosConfirmados").text(numeroComas(confirmados));
+    $("#defunciones").text(numeroComas(defunciones));
+    $("#porcentajeLetalidad").text(letalidad.toFixed(1));
+    $("#fecha").text(json.ultimaAct);
 
-            /*Convierte la ultima fecha de string a date, para poder restarle un dia,
-            despues la regresa a string para poder ser usada en el JSON*/
-            mes = fecha.slice(3,5)
-            dia = fecha.slice(0,2)
-            fechaDefunciones = new Date(fecha.slice(6,10), (mes-1) , dia)
-            fechaDefunciones.setDate(fechaDefunciones.getDate() - 1);
-            fechaDefunciones = fechaDefunciones.toLocaleString();
-            fechaDefunciones = fechaDefunciones.slice(0,2) + "-" + fechaDefunciones.slice(3,5) + "-" + fecha.slice(6,10);
-            defunciones = json.Nacional.defunciones[fechaDefunciones].acumuladas;
-        }
+    datosTabla = ["Total nacional", numeroComas(confirmados), numeroComas(defunciones), letalidad.toFixed(3)]
+    tabla.row.add(datosTabla).draw();
+
+    var confirmadosNacionales = JSONtoArray(json.Nacional, "confirmados");
+    confirmadosNacionales = ordenarArray(confirmadosNacionales);
+    var defuncionesNacionales = JSONtoArray(json.Nacional, "defunciones");
+    defuncionesNacionales = ordenarArray(defuncionesNacionales);
+
+    graficarConfirmados(confirmadosNacionales, "Nacional");
+    graficarDefunciones(defuncionesNacionales, "Nacional");
+    //
+
+    //Por cada partido
+    partidos.forEach( partido => {
+        const confirmadosPartido = json[partido[1]].confirmados[fecha].acumulados
+        const defuncionesPartido = json[partido[1]].defunciones[fechaDefunciones].acumuladas
+
+        generarResumenPartido(partido[0], confirmadosPartido, defuncionesPartido);
+        console.log(partido[0]);
         
-        const letalidad = defunciones * 100 / confirmados
-        $("#casosConfirmados").text(numeroComas(confirmados));
-        $("#defunciones").text(numeroComas(defunciones));
-        $("#porcentajeLetalidad").text(letalidad.toFixed(1));
-        $("#fecha").text(json.ultimaAct);
-
-        datosTabla = ["Total nacional", numeroComas(confirmados), numeroComas(defunciones), letalidad.toFixed(3)]
-        tabla.row.add(datosTabla).draw();
-
-        var confirmadosNacionales = JSONtoArray(json.Nacional, "confirmados");
-        confirmadosNacionales = ordenarArray(confirmadosNacionales);
-        var defuncionesNacionales = JSONtoArray(json.Nacional, "defunciones");
-        defuncionesNacionales = ordenarArray(defuncionesNacionales);
-
-        graficarConfirmados(confirmadosNacionales, "Nacional");
-        graficarDefunciones(defuncionesNacionales, "Nacional");
-        //
-
-        //Por cada partido
-        partidos.forEach( partido => {
-            const confirmadosPartido = json[partido[1]].confirmados[fecha].acumulados
-            const defuncionesPartido = json[partido[1]].defunciones[fechaDefunciones].acumuladas
-
-            generarResumenPartido(partido[0], confirmadosPartido, defuncionesPartido);
-            console.log(partido[0]);
-            
-        })
-
-        //Funcion para generar los resumenes por partido
-        generarResumenPartido = (partido, confirmados, defunciones) => {
-            var info = ` 
-            <div class='my-4 bg-white rounded-sm p-4 border-4'>
-                <h3 class='text-3xl font-semibold'>${partido}</h3>
-                <p>${numeroComas(confirmados)} casos confirmados</p>
-                <p>${numeroComas(defunciones)} defunciones</p>
-            </div>` 
-            $("#gridPartido").append(info);
-
-            var letalidad = defunciones * 100 / confirmados;
-            /*var row = `
-            <tr class="border-t-2 border-black">
-                <td class="p-3">${partido.nombre}</td>
-                <td class="p-3">${numeroComas(confirmados)}</td>
-                <td class="p-3">${numeroComas(defunciones)}</td>
-                <td class="p-3">${letalidad.toFixed(3)}</td>
-            </tr>`
-            $("#tableBody").append(row);*/
-            datosTabla = [partido, numeroComas(confirmados), numeroComas(defunciones), letalidad.toFixed(3)]
-            tabla.row.add(datosTabla).draw();
-        };
     })
-}
+})
+
+//Funcion para generar los resumenes por partido
+generarResumenPartido = (partido, confirmados, defunciones) => {
+    var info = ` 
+    <div class='bg-white rounded-sm p-4 border-4'>
+        <h3 class='text-3xl font-semibold'>${partido}</h3>
+        <p>${numeroComas(confirmados)} casos confirmados</p>
+        <p>${numeroComas(defunciones)} defunciones</p>
+    </div>` 
+    $("#gridPartido").append(info);
+
+    var letalidad = defunciones * 100 / confirmados;
+    datosTabla = [partido, numeroComas(confirmados), numeroComas(defunciones), letalidad.toFixed(3)]
+    tabla.row.add(datosTabla).draw();
+};
 
 //Funcion para separar a un numero cada 3 digitos
 numeroComas = numero => numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-
 
 //Graficas
 const graficarConfirmados = (arreglo, partido) =>{

@@ -24,43 +24,6 @@
             <div class="text-base m-4 tracking-widest md:m-3 md:text-2xl">  
                 <h1><a href="index.html">COVID Por Partido</a></h1>
             </div>
-            <button class="flex items-center px-3 py-2 border rounded text-white border-white absolute top-4 right-4 md:hidden" id="toggle-button">
-                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-            </button>
-            <div class="flex hidden w-full md:block md:w-auto" id="menu">
-                <ul class="w-full flex-col md:flex md:flex-row md:wd-auto">
-                    <li class="text-center hover:bg-gray-400">
-                        <a class="p-4 block" href="#" id="lista-partidos">Datos por partido</a>
-                    </li>
-                    <ul class="hidden md:absolute md:bg-black md:top-14" id="partidos">
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="PRI.html">PRI</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">MORENA</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">PAN</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">PRD</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">MC</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">PES</a>
-                        </li>
-                        <li class="text-center hover:bg-gray-400">
-                            <a class="p-4 block" href="#">Independiente</a>
-                        </li>
-                    </ul>
-                    <div class="h-0 w-4/5 my-2 mx-auto overflow-hidden border-t-2 border-white md:hidden"></div>
-                    <li class="text-center hover:bg-gray-400">
-                        <a class="p-4 block" href="#">Tabla general</a>
-                    </li>
-                </ul>
-            </div>
         </nav>
     </header>
     <main class="pt-24 pb-12 bg-gray-100">
@@ -96,13 +59,7 @@
             </section>
             <section class="mt-4">
                 <h2 class="text-4xl font-semibold">Datos por partido</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="gridPartido">   
-                    <!--<div class="my-4 bg-white rounded-sm p-4">
-                        <h3 class="text-3xl font-semibold">Partido X</h3>
-                        <p> casos confirmados</p>
-                        <p> defunciones</p>
-                        <a class="block py-4 underline text-blue-700 text-xl" href="detallePartidoX.html">Mas información</a>
-                    </div>-->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="gridPartido">
                 </div>
             </section>
             <section class="mt-4">
@@ -118,21 +75,7 @@
                             </tr>
                         </thead>
                         <tbody class="text-right" id="tableBody">
-                            <!--<tr class="border-t-2 border-black">
-                                <td class="p-3">PartidoX</td>
-                                <td class="p-3">1</td>
-                                <td class="p-3">1</td>
-                                <td class="p-3">1</td>
-                            </tr>-->
                         </tbody>
-                        <!--<tfoot>
-                            <tr class="border-t-2 bg-gray-200 border-black">
-                                <td class="p-3">Nacional</td>
-                                <td class="p-3">1</td>
-                                <td class="p-3">1</td>
-                                <td class="p-3">1</td>
-                            </tr>
-                        </tfoot>-->
                     </table>
                 </div>
             </section>
@@ -148,7 +91,7 @@
                     </li>
                     <li>
                         <p>
-                            <strong>PAN:</strong> Aguascalientes, Baja California Sur, Chihuahua, Durango, Guanajuato, Nayarit, Querétaro, Tamaulipas, Yucatan. (9 estados).
+                            <strong>PAN:</strong> Aguascalientes, Baja California Sur, Chihuahua, Durango, Guanajuato, Nayarit, Querétaro, Tamaulipas, Yucatán. (9 estados).
                         </p>
                     </li>
                     <li>
@@ -177,7 +120,7 @@
                     </li>
                 </ul>
                 <p>*Campeche es gobernado oficialmente por un gobernador sustituto, pero es militante del PRI y el antiguo gobernador también es del PRI por lo que se cuenta como gobernado por el PRI.</p>
-                <img src="Imgs/EstadosPorPartido.png" class="w-full max-w-screen-sm mt-2" alt="Distribución de partidos en México">
+                <img src="Images/EstadosPorPartido.png" class="w-full max-w-screen-sm mt-2" alt="Distribución de partidos en México">
                 <p class="text-sm"><cite>Mexico Governors Map</cite> de Wikimedia Commons</p>
                 <h3 class="text-3xl my-2">¿De donde se obtienen los datos mostrados?</h3>
                 <p>Los datos son obtenidos del sitio web oficial del Gobierno de México <a class="underline text-blue-700"href="https://coronavirus.gob.mx/datos/">https://coronavirus.gob.mx/datos/</a></p>
@@ -188,7 +131,12 @@
     </main>
     <footer class="bg-black text-white p-2 text-center">
         <p class="my-2 text-xl">Compartir en redes sociales</p>
-        <!--Links-->
+        <a href="http://www.facebook.com/sharer.php?u=https://eduardoconx.github.io/COVIDPorPartido/">
+            <i class="fab fa-facebook-square fa-2x m-4"></i>
+        </a>
+        <a href="http://twitter.com/share?text=Como+manejó+el+COVID+tu+partido+favorito?.+%23COVIDPorPartido+--+&url=https://eduardoconx.github.io/COVIDPorPartido">
+            <i class="fab fa-twitter-square fa-2x m-4"></i>
+        </a>
         <h3 class="my-2 text-xl">Página creada y actualizada por <u><a href="https://github.com/EduardoConX">Eduardo Pacheco</a></u></h3>
         <p class="my-4 text-xl">
             <a class="border-2 p-1 hover:bg-white hover:text-black" href="https://github.com/EduardoConX/COVIDPorPartido">Proyecto en Github</a>
@@ -197,9 +145,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a0519bdd56.js" crossorigin="anonymous"></script>
     <script src="app.js"></script>
-    <script>
-        generarHomePage();
-    </script>
 </body>
 </html>

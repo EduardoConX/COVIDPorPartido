@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <header>
         <nav class="flex flex-col items-start justify-between bg-black text-white w-full fixed top-0 z-10 md:items-center md:flex-row">
             <div class="text-base m-4 tracking-widest md:m-3 md:text-2xl">  
@@ -39,6 +40,30 @@
                         <h3 class="text-3xl"><span id="defunciones"></span> defunciones</h3>
                         <p><span id="porcentajeLetalidad"></span> % de letalidad</p>
                     </div>
+=======
+    <nav class="navbar">
+        <div class="logo">COVID Por Partido</div>
+        <a href="#" class="toggle-button">
+            <span class="barra"></span>
+            <span class="barra2"></span>
+            <span class="barra"></span>
+        </a>
+        <div class="navbar-links">
+            <ul>
+                <li><a href="#datosGenerales">Datos generales</a></li>
+                <li><a href="#datosPartidos">Datos por partido</a></li>
+                <li><a href="#tablaGeneral">Tabla general</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="datosGenerales" id="datosGenerales">
+        <div class="contenedor">
+            <h1>Datos actualizados al día <span id="fecha"></span></h1>
+            <div class="cards">
+                <div class="card card-confirmados">
+                    <h3><span id="numeroConfirmados"></span> casos confirmados</h3>
+>>>>>>> 40fbdb77786032df66f15ae611e5aefa9b2b632a
                 </div>
                 <div class="w-full my-4 bg-white rounded-sm p-4">
                     <h3 class="text-3xl">Casos confirmados acumulados</h3>
@@ -48,6 +73,7 @@
                     <h3 class="text-3xl">Casos confirmados diarios</h3>
                     <canvas id="confirmadosDiariosNacional"></canvas>
                 </div>
+<<<<<<< HEAD
                 <div class="w-full my-4 bg-white rounded-sm p-4">
                     <h3 class="text-3xl">Defunciones acumuladas</h3>
                     <canvas id="defuncionesAcumuladasNacional"></canvas>
@@ -141,11 +167,81 @@
         <p class="my-4 text-xl">
             <a class="border-2 p-1 hover:bg-white hover:text-black" href="https://github.com/EduardoConX/COVIDPorPartido">Proyecto en Github</a>
         </p>
+=======
+            </div>
+        </div>
+    </section>
+    <section class="datos-partidos" id="datosPartidos">
+        <div class="contenedor">
+            <h2>Resumen por partido</h2>
+            <div class="partidos">
+                
+            </div>
+        </div>
+    </section>
+    <section class="tabla-general" id="tablaGeneral">
+        <div class="contenedor">
+            <h2>Resumen general</h2>
+            <table id="tablaResumen">
+                <thead>
+                    <tr>
+                        <th>Partido</th>
+                        <th>Casos confirmados</th>
+                        <th>Defunciones</th>
+                        <th>% de letalidad</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+    <section class="faq" id="faq">
+        <div class="contenedor">
+            <h2>Preguntas frecuentes</h2>
+            <h3>¿Que estados pertenecen a que partidos?</h3>
+            <p>La distribución de estados según el partido que los gobierna es la siguiente:</p>
+            <br>
+            <ul>
+                <li><p><b>PRI: </b>Campeche*, Coahuila, Colima, Guerrero, Hidalgo, Estado de México, Oaxaca, San Luis Potosí, Sinaloa, Sonora, Tlaxcala y Zacatecas. (11 estados).</p></li>
+                <li><p><b>PAN: </b>Aguascalientes, Baja California Sur, Chihuahua, Durango, Guanajuato, Nayarit, Querétaro, Tamaulipas, Yucatan. (9 estados).</p></li>
+                <li><p><b>MORENA: </b>Baja California, Chiapas, Ciudad de México, Puebla, Tabasco y Veracruz. (6 estados).</p></li>
+                <li><p><b>PRD:</b> Michoacán y Quintana Roo. (2 estados).</p></li>
+                <li><p><b>Movimiento Ciudadano:</b> Jalisco. (1 estado).</p></li>
+                <li><p><b>Encuentro Social: </b>Morelos (1 estado).</p></li>
+                <li><p><b>Independiente: </b>Nuevo León (1 estado).</p></li>
+            </ul>
+            <p>*Campeche es gobernado oficialmente por un gobernador sustituto, pero es militante del PRI y el antiguo gobernador también es del PRI por lo que se cuenta como gobernado por el PRI. </p>
+            <img src="imgs/EstadosPorPartido.png" alt="Estados por partido">
+            <h3>¿De donde surge la idea de agrupar los casos por partido?</h3>
+            <p>La idea surge de diferentes estudios en los Estados Unidos, donde se analiza el crecimiento en casos de COVID-19 en estados democratas y republicanos, la idea de este proyecto es analizar México de la misma manera pero con los 7 partidos que se reparten los 32 estados de la republica.</p>
+            <img src="imgs/EstudioUS.png" alt="Estudio en Estados Unidos">
+            <h3>¿De donde se obtienen los datos mostrados?</h3>
+            <p>Los datos son obtenidos del sitio web oficial del Gobierno de México <a href="https://coronavirus.gob.mx/datos/">https://coronavirus.gob.mx/datos/</a></p>
+        </div>
+    </section>
+    <footer>
+        <!--<p>Compartenos en tus redes sociales</p>
+        <ul>
+            <li><a href="https://www.facebook.com/sharer"><i class="facebook"></i></a></li>
+            <li><a href="#">Twitter</a></li>
+        </ul>-->
+        <h3>Compartir en redes sociales</h3>
+        <a href="http://www.facebook.com/sharer.php?u=https://eduardoconx.github.io/COVIDPorPartido/"><i class="fab fa-facebook-square fa-2x"></i></a>
+        <a href="http://twitter.com/share?text=Como+manejó+el+COVID+tu+partido+favorito?.+%23COVIDPorPartido+--+&url=https://eduardoconx.github.io/COVIDPorPartido"><i class="fab fa-twitter-square fa-2x"></i></a>
+        
+        <p>Pagina creada y actualizada por <a class="mi-perfil" href="https://github.com/EduardoConX">Eduardo Pacheco</a></p>
+        <br>
+        <p><a class="repositorio" href="https://github.com/EduardoConX/COVIDPorPartido">Proyecto en Github</a></p>
+>>>>>>> 40fbdb77786032df66f15ae611e5aefa9b2b632a
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/a0519bdd56.js" crossorigin="anonymous"></script>
+<<<<<<< HEAD
     <script src="app.js"></script>
+=======
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="js/app.js"></script>
+>>>>>>> 40fbdb77786032df66f15ae611e5aefa9b2b632a
 </body>
 </html>

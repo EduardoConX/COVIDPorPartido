@@ -1,5 +1,3 @@
-
-
 //Lista de partidos con su nombre completo y el que tienen en la base de datos
 encuentroSocial = ["Encuentro Social", "PES"];
 independiente = ["Independiente", "Independiente"];
@@ -46,10 +44,18 @@ fetch("https://covidporpartido.firebaseio.com/.json")
         despues la regresa a string para poder ser usada en el JSON*/
         mes = fecha.slice(3,5)
         dia = fecha.slice(0,2)
-        fechaDefunciones = new Date(fecha.slice(6,10), (mes-1) , dia)
-        fechaDefunciones.setDate(fechaDefunciones.getDate() - 1);
-        fechaDefunciones = fechaDefunciones.toLocaleString();
-        fechaDefunciones = fechaDefunciones.slice(0,2) + "-" + fechaDefunciones.slice(3,5) + "-" + fecha.slice(6,10);
+        if(dia == 1){
+            //Si es el primero del mes
+            mes--;
+            mes = "0" + mes;
+            mes = mes.slice(-2)
+        }else{
+            //Si no es el primer dia del mes
+            dia--;
+            dia = "0" + dia;
+            dia = dia.slice(-2)
+        }        
+        fechaDefunciones = dia + "-" + mes + "-" + fecha.slice(6,10);
         defunciones = json.Nacional.defunciones[fechaDefunciones].acumuladas;
     }
     
@@ -77,8 +83,6 @@ fetch("https://covidporpartido.firebaseio.com/.json")
         const defuncionesPartido = json[partido[1]].defunciones[fechaDefunciones].acumuladas
 
         generarResumenPartido(partido[0], confirmadosPartido, defuncionesPartido);
-        console.log(partido[0]);
-        
     })
 })
 
